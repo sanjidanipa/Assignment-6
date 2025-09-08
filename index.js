@@ -4,19 +4,35 @@ const allCategories = () => {
     .then(res => res.json())
     .then(json => displayCategoriesName(json.categories))
 }
-const AllPlants =  () => {
-    fetch ("https://openapi.programming-hero.com/api/plants")
-    .then ((res) => res.json())
-    .then ((data) => displayAllPlant(data.plants))
+ const allPlants = async() => {
+    const url = "https://openapi.programming-hero.com/api/plants";
+    const res = await fetch(url)
+    const data = await res.json();
+    displayAllPlants(data.plants)
+};
 
+allPlants()
 
-}
- 
-const displayAllPlant = (plants) => {
+const displayAllPlants = (plants) =>{
     const plantContainer = document.getElementById("plant-container");
-   for
+    for (let plant of plants){
+        const plantCard = document.createElement("div")
+        plantCard.innerHTML = `
+        <div class="p-4 bg-white shadow-lg rounded-lg">
+        <img src="${plant.images}">
+        <div class="space-y-1">
+          <h2 class="font-semibold text-[#1F2937]">${plant.name}</h2>
+          <p class="text-[#1F2937]">${plant.description}</p>
+        </div>
+        <div class="flex justify-between items-center my-3">
+          <p class="p-2 bg-[#DCFCE7] text-[#15803D] font-medium rounded-xl">${plant.category}</p>
+          <p class="font-semibold">৳<span>${plant.price}</span></p>
+        </div>
+        <button id="add_cart" class="btn bg-[#15803D] text-white rounded-2xl w-full ">Add to Cart</button>
+      </div>`
+      plantContainer.appendChild(plantCard)
+    }
 }
-
 
 
 const displayCategoriesName = (names) => {
@@ -35,14 +51,6 @@ allCategories()
 
 
 
-  {
-      "id": 1,
-      "image": "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg",
-      "name": "Mango Tree",
-      "description": "A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green canopy offers shade, while its sweet fruits are rich in vitamins and minerals.",
-      "category": "Fruit Tree",
-      "price": 500
-    },
 
 
 
