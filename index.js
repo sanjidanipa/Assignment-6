@@ -11,7 +11,13 @@ const allCategories = () => {
     displayAllPlants(data.plants)
 };
 
-const plantCategory =
+const plantByCategory = async(id) => {
+     const url = `https://openapi.programming-hero.com/api/category/${id}`;
+    const res = await fetch(url);
+    const details = await res.json();
+    console.log(details.plants)
+};
+
 
 allPlants()
 
@@ -27,7 +33,7 @@ const displayAllPlants = (plants) =>{
           <p class="text-[#1F2937]">${plant.description}</p>
         </div>
         <div class="flex justify-between items-center my-3">
-          <p class=" p-2 bg-[#DCFCE7] text-[#15803D] font-medium rounded-xl">${plant.category}</p>
+          <button class=" p-2 bg-[#DCFCE7] text-[#15803D] font-medium rounded-xl">${plant.category}</button>
           <p class="font-semibold">৳<span>${plant.price}</span></p>
         </div>
         <button id="add_cart" class="btn bg-[#15803D] text-white rounded-2xl w-full ">Add to Cart</button>
@@ -43,7 +49,7 @@ const displayCategoriesName = (names) => {
         for (let name of names ){
             const btnDiv = document.createElement("div")
             btnDiv.innerHTML = `
-            <button id= "category_btn_${name.category_name}" onclick="categoriesDetail(${name.category_name})" class="btn bg-transparent border-none flex justify-start hover:bg-[#15803D] rounded-md hover:text-xl hover:font-semibold hover:text-white w-full p-3 my-3">${name.category_name}</button> `
+            <button id= "category_btn_${name.category_name}" onclick="plantByCategory(${name.id})" class="btn bg-transparent border-none flex justify-start hover:bg-[#15803D] rounded-md hover:text-xl hover:font-semibold hover:text-white w-full p-3 my-3">${name.category_name}</button> `
             categoriesName.appendChild(btnDiv)
         }
 }
